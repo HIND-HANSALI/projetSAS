@@ -16,19 +16,19 @@ typedef struct Historique{
     // int prix-total;
     struct Produit produit;
 
-}
-typedef struct Stock
-{
-    int revenu;
-    int nombre_produit;
-    struct Historique historique;
+};
+// typedef struct Stock
+// {
+//     int revenu;
+//     int nombre_produit;
+//     
 
-} Stock;
+// } Stock;
 
 int np = 0;
 Produit produit[100];
 // Produit produit[2]={{1,"ART",2,40},{2,"tam",5,50}};
-Stock stock[100];
+// Stock stock[100];
 void ajouterProduit()
 {
     printf("entrer le code du produit :");
