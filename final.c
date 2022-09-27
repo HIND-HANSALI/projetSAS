@@ -31,7 +31,13 @@ int np = 0;
 ProduitsVendu produitvendu[100];
 int nbrpv=0;
 
+bool test(int code,Produit ){
+    bool p=0;
+    if (produit[np].code==code)
+    return p;
+    else ;
 
+}
 
 
 void ajouterProduit()
@@ -41,22 +47,25 @@ void ajouterProduit()
     scanf("%d", &produit[np].code);
     for(int i=0;i<np;i++){
         if(produit[np].code==produit[i].code){
-           printf("ce code existe deja\n") ;
-           goto debt;
+            printf("ce code existe deja\n");
+            goto debt;
         }
 
     }
+    
     
     printf("entrer le nom du produit :");
     scanf("%s", produit[np].nom);
     printf("entrer la quantite du produit :");
     scanf("%d", &produit[np].quantite);
-    // while(produit[np].quantite<0){
-            
-    //         printf("la quantite pas valide\n");
-    //         printf("entrer une nouvelle quantite: ");
-    //         scanf("%d",&produit[np].quantite);
-    //     }
+    while (produit[np].quantite<0)
+    {
+        printf("cette qte est negatif\n");
+        printf("entrer une nouvelle quantite du produit :");
+         scanf("%d", &produit[np].quantite);
+    }
+    
+    
     printf("entrer le prix du produit :");
     scanf("%f", &produit[np].prix);
     produit[np].prixTTC = produit[np].prix +(produit[np].prix * 0.15);
@@ -97,7 +106,7 @@ void triProduitAlphabet(void)
     Produit p;
     for (int i = 0; i < np; i++)
     { 
-        for (int j = i + 1; j < np; j++)// i+1 pour minimiser 
+        for (int j = i + 1; j < np; j++)
         {
             if (strcmp(produit[i].nom, produit[j].nom) == 1)//>0
             {
@@ -140,6 +149,7 @@ void rechercheCode()
     {
         if (produit[i].code == c)
         {
+            
         printf("  -------------------------------------------------------------------------------\n" );
         printf("  |     Code    |    Nom   |    Prix      |   Prix TTC  |  Quantite du produit |\n" );
         printf("  -------------------------------------------------------------------------------\n" );
@@ -148,8 +158,13 @@ void rechercheCode()
         printf("  -------------------------------------------------------------------------------\n" );    
             break;
         }
+        // else{
+        //     printf("code introuvable \n");
+        // }
         
     }
+    
+
 }
 
 void rechercheQuantite()
@@ -197,6 +212,7 @@ void acheterProduit()
                 strcpy(produitvendu[nbrpv].nom,produit[i].nom);
                 produitvendu[nbrpv].prixTTC = produit[i].prixTTC;
                 produitvendu[nbrpv].quantite = quantite;
+                
                 produitvendu[nbrpv].prixTotal = quantite * produit[i].prixTTC;
 
                 produitvendu[nbrpv].d.day =datee->tm_mday ;
@@ -249,19 +265,35 @@ void supprimer()
 
 void alimenterStock()
 {
-    int i, code, quantite;
+    int i, code, quantite,m=0;
     printf("entre le code du produit :");
     scanf("%d", &code);
+for (i = 0; i < np; i++)
+    {
+        if (produit[i].code == code)
+        {
+            m=1;
+         }
+    }  
+    if(m==0) printf ("ce code n'existe pas\n"); 
+    else{
+
     printf("entre la quantite du produit :");
     scanf("%d", &quantite);
     for (i = 0; i < np; i++)
     {
         if (produit[i].code == code)
         {
+           // m=1;
             produit[i].quantite += quantite;
             break;
         }
+        
     }
+    }
+   // if(m==0){
+     //   printf("le code n'existe pas\n");
+   // }
 }
 // IF T[I+1].prix*T[i+1].quantite<min
 void etat_stock()
@@ -300,7 +332,7 @@ void statistiques(){
         {
             prixT += produitvendu[i].prixTotal ; //somme prix produit vendu
             Totalquantite+=produitvendu[i].quantite;
-            
+
         if(max < produitvendu[i].prixTotal)
         {
             max = produitvendu[i].prixTotal;
